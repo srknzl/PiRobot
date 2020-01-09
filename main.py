@@ -42,6 +42,6 @@ while True:
             client_socket.send("Wrong usage of speed command" + str(splittedData))
             print("Wrong usage of speed command", splittedData)
             continue
-        leftMotor.value = splittedData[1]
-        pass  # todo Add 90 degree left turn code
+        leftMotor.value = float(splittedData[1])
+        rightMotor.value = float(splittedData[1])
     # print(data)
