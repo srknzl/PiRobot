@@ -9,6 +9,7 @@ from signal import pause
 def countWheel():
     global speedSensorCounter
     speedSensorCounter += 1
+    print(speedSensorCounter)
 
 
 def listenForMessages(cs):
@@ -73,10 +74,7 @@ listener = Thread(target=listenForMessages, args=(cs,), daemon=True)
 listener.start()
 
 speedSensorCounter = 0
-speedSensor = DigitalInputDevice(4, pull_up=False)
-# speedSensor.when_activated = countWheel
-
-while True:
-    print(speedSensor.value)
+speedSensor = Button(17)
+speedSensor.when_pressed = countWheel
 
 pause()
