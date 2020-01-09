@@ -1,6 +1,6 @@
 import time
 from threading import Thread
-from gpiozero import Motor, Button
+from gpiozero import Motor, Button, DigitalInputDevice
 import bluetooth
 from bluetooth import BluetoothSocket
 from signal import pause
@@ -73,9 +73,10 @@ listener = Thread(target=listenForMessages, args=(cs,), daemon=True)
 listener.start()
 
 speedSensorCounter = 0
-speedSensor = Button(4)
-speedSensor.when_activated = countWheel
+speedSensor = DigitalInputDevice(4)
+# speedSensor.when_activated = countWheel
 
 while True:
     print(speedSensor.value)
+
 pause()
