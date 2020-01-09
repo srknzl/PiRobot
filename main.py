@@ -78,5 +78,4 @@ speedSensor.when_activated = countWheel
 
 while True:
     print(speedSensor.value)
-
 pause()
