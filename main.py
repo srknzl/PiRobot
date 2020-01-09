@@ -25,7 +25,7 @@ leftMotor = Motor(23, 24, 18, pwm=True)  # 23-> pin16, 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
 
 speedSensorCounter = 0
-speedSensor = DigitalInputDevice(4)
+speedSensor = DigitalInputDevice(4, pull_up=False)
 
 #speedSensor = Button(4)
 #speedSensor.when_activated = countWheel
