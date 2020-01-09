@@ -1,9 +1,14 @@
 import time
-from gpiozero import Motor
+from gpiozero import Motor, Button
 import bluetooth
 from bluetooth import BluetoothSocket
 
 # from signal import pause
+
+def countWheel(device):
+    global speedSensorCounter
+    speedSensorCounter += 1
+
 
 PORT = 1
 server_socket = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
@@ -18,6 +23,10 @@ print("Accepted connection from ", address)
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # 23-> pin16, 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
+
+speedSensorCounter = 0
+speedSensor = Button(4)
+speedSensor.when_activated = countWheel
 
 while True:
     data = client_socket.recv(1024).decode("utf-8")
@@ -54,4 +63,7 @@ while True:
     elif message == "backward":
         leftMotor.backward(leftMotor.value)
         rightMotor.backward(rightMotor.value)
+    elif message == "wheel":
+        client_socket.send("Wheel:" + str(speedSensorCounter))
+        print("Wheel: ", speedSensorCounter)
     # print(data)
