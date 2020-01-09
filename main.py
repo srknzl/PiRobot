@@ -1,9 +1,8 @@
-from gpiozero import Motor
+from gpiozero import Motor, PWMOutputDevice
 from signal import pause
-
-motor = Motor(4, 5, 26, pwm=True)
-motor.forward(0.5)
-
-print(motor.value)
+pwm = PWMOutputDevice("GPIO26")
+motor = Motor(4, 5)
+motor.forward()
+pwm.value = 0.5
 
 pause()
