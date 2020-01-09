@@ -3,9 +3,7 @@ from threading import Thread
 from gpiozero import Motor, Button
 import bluetooth
 from bluetooth import BluetoothSocket
-
-
-# from signal import pause
+from signal import pause
 
 
 def countWheel():
@@ -77,3 +75,5 @@ listener.start()
 speedSensorCounter = 0
 speedSensor = Button(4)
 speedSensor.when_activated = countWheel
+
+pause()
