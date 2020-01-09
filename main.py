@@ -73,7 +73,7 @@ listener = Thread(target=listenForMessages, args=(cs,), daemon=True)
 listener.start()
 
 speedSensorCounter = 0
-speedSensor = DigitalInputDevice(17)
+speedSensor = DigitalInputDevice(4, pull_up=False)
 # speedSensor.when_activated = countWheel
 
 while True:
