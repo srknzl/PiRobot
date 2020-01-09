@@ -44,4 +44,14 @@ while True:
             continue
         leftMotor.value = float(splittedData[1])
         rightMotor.value = float(splittedData[1])
+    elif message == "stop":
+        leftMotor.value = 0
+        rightMotor.value = 0
+        # todo Add stop led code
+    elif message == "forward":
+        leftMotor.forward(leftMotor.value)
+        rightMotor.forward(rightMotor.value)
+    elif message == "backward":
+        leftMotor.backward(leftMotor.value)
+        rightMotor.backward(rightMotor.value)
     # print(data)
