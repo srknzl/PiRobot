@@ -76,4 +76,7 @@ speedSensorCounter = 0
 speedSensor = Button(4)
 speedSensor.when_activated = countWheel
 
+while True:
+    print(speedSensor.value)
+
 pause()
