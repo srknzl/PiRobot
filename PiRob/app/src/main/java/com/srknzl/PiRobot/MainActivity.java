@@ -1,19 +1,18 @@
 package com.srknzl.PiRobot;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
-
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,21 +20,21 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     ListViewAdapter adapter;
     ArrayList<Model> arrayList = new ArrayList<>();
-
+    final Context context = this;
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         Button bluetoothButton = toolbar.findViewById(R.id.bluetooth_button);
+        final CheckBox c = toolbar.findViewById(R.id.connection_status);
 
         bluetoothButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bluetooth.connectIfPaired(context);
             }
         });
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 

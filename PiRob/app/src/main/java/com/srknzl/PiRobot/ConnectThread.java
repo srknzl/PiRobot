@@ -1,8 +1,13 @@
 package com.srknzl.PiRobot;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.util.Log;
+import android.widget.CheckBox;
+
+import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -12,10 +17,12 @@ import java.util.UUID;
 public class ConnectThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
+    private Activity context;
 
-    public ConnectThread(BluetoothDevice device) {
+    public ConnectThread(BluetoothDevice device, Context context) {
         // Use a temporary object that is later assigned to mmSocket
         // because mmSocket is final.
+        this.context = (Activity) context;
         BluetoothSocket tmp = null;
         mmDevice = device;
 
@@ -38,13 +45,29 @@ public class ConnectThread extends Thread {
             // Connect to the remote device through the socket. This call blocks
             // until it succeeds or throws an exception.
             mmSocket.connect();
-        } catch (IOException connectException) {
+        } catch (final IOException connectException) {
             // Unable to connect; close the socket and return.
             try {
                 mmSocket.close();
             } catch (IOException closeException) {
                 Log.e("BLUETOOTH", "Could not close the client socket", closeException);
             }
+            Bluetooth.connected = true;
+
+
+
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toolbar toolbar = context.findViewById(R.id.toolbar);
+                    CheckBox c = toolbar.findViewById(R.id.connection_status);
+                    c.setChecked(true);
+                }
+            });
+
+
+
+
             return;
         }
 
