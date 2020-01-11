@@ -6,26 +6,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.ActionBar;
+
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 public class NewActivity extends AppCompatActivity {
     ListView listView;
-    ArrayList<Model> arrayList = new ArrayList<Model>();
-    String[] t;
-    String[] des;
-    int[] i;
+    ArrayList<Model> arrayList = new ArrayList<>();
     ListViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new);
-
-        ActionBar actionBar = getSupportActionBar();
-        TextView mDetailTv = findViewById(R.id.textView);
 
         Intent intent = getIntent();
         String mContent = intent.getStringExtra("contentTv");
@@ -33,28 +28,30 @@ public class NewActivity extends AppCompatActivity {
         String des[] = new String[100];
         Arrays.fill(des, null);
         int i[] = new int[100];
-        Arrays.fill(i,R.drawable.scrapbook);
+        Arrays.fill(i,R.drawable.car);
         //-----MainMenu
-        if (mContent.startsWith("m")){ extra(mContent);setContentView(R.layout.genel02);
-                Button b1 = (Button) this.findViewById(R.id.top);
-                b1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(NewActivity.this, "adfadf", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        }
-        if (mContent.startsWith("b")){ extra(mContent);
-        }
-        if (mContent.startsWith("a")){ extra(mContent);setContentView(R.layout.genel03);
+        if (mContent.startsWith("m")){
 
+            extra(mContent);
+            setContentView(R.layout.manuel_with_buttons);
 
+            Button b1 = this.findViewById(R.id.top);
+            b1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(NewActivity.this, "adfadf", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-        // -----------help
-        //if (mContent.startsWith("help3")){ extra(mContent);setContentView(R.layout.help3);
-        // Button b1 = (Button) this.findViewById(R.id.send);}
-        //b1.setOnClickListener(new View.OnClickListener() {public void onClick(View view) { sendmes(); }});
-        //------------
+        if (mContent.startsWith("a")){
+            extra(mContent);
+            setContentView(R.layout.autonomous);
+        }
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
     String mcon="none";
     boolean booleansearch =true;
@@ -76,11 +73,10 @@ public class NewActivity extends AppCompatActivity {
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id==R.id.home){
+        if (id == android.R.id.home){
             this.finish();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -67,7 +67,7 @@ cs = acceptResult[0]
 address = acceptResult[1]
 print("Accepted connection from ", address)
 
-leftMotor = Motor(23, 24, 18, pwm=True)  # 23-> pin16, 24->pin18, 18-> pin12
+leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
 
 listener = Thread(target=listenForMessages, args=(cs,), daemon=True)

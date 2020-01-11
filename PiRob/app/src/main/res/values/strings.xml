@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PiRobot Controller</string>
+    <string name="toolbar_title">PiRobot Controller</string>
+    <string name="connect_button">Connect</string>
+    <string name="connection_explanation">Connection Status:</string>
+
 </resources>

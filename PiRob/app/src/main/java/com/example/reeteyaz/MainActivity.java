@@ -5,8 +5,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,14 +18,15 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     ListViewAdapter adapter;
     String[] t;
-    String[] description;
-    int[] icon;
-    ArrayList<Model> arrayList = new ArrayList<Model>();
+    ArrayList<Model> arrayList = new ArrayList<>();
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("PiRobot Controller");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
 //---------
         mainmenu();
 //-----------
@@ -44,24 +47,16 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     public void mainmenu(){
-        t = new String[]{"Bluetooth","Manuel", "Auto"};
+        t = new String[]{"Manuel", "Auto"};
         String de[] = new String[20];
         Arrays.fill(de, null);
         int ic[] = new int[20];
-        Arrays.fill(ic,R.drawable.scrapbook);
-        //Pngs
-        //ic[0]=R.drawable.eme;
-        //ic[1]=R.drawable.derma;
-        //Start
+        Arrays.fill(ic,R.drawable.car);
         setlist(t,de,ic);
-        ActionBar actionBar = getSupportActionBar();actionBar.setTitle("PiRobot Controller");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("PiRobot Controller");
     }
     @Override public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id==R.id.home){
-            mainmenu();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 }
