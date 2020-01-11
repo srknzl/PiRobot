@@ -1,4 +1,4 @@
-package com.example.reeteyaz;
+package com.srknzl.PiRobot;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class ListViewAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(final int postition, View view, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
         ViewHolder holder;
         if (view==null){
             holder = new ViewHolder();
@@ -66,49 +67,27 @@ public class ListViewAdapter extends BaseAdapter{
         else {
             holder = (ViewHolder)view.getTag();
         }
-        holder.mTitleTv.setText(modellist.get(postition).getTitle());
-        holder.mDescTv.setText(modellist.get(postition).getDesc());
-        holder.mIconIv.setImageResource(modellist.get(postition).getIcon());
+        holder.mTitleTv.setText(modellist.get(position).getTitle());
+        holder.mDescTv.setText(modellist.get(position).getDesc());
+        holder.mIconIv.setImageResource(modellist.get(position).getIcon());
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //MainMenu-------
-                if (modellist.get(postition).getTitle().equals("Manuel")){ Intent intent = new Intent(mContext, NewActivity.class);
-                    intent.putExtra("contentTv", "m");mContext.startActivity(intent); }
-                if (modellist.get(postition).getTitle().equals("Auto")){ Intent intent = new Intent(mContext, NewActivity.class);
-                    intent.putExtra("contentTv", "a");mContext.startActivity(intent); }
-                if (modellist.get(postition).getTitle().equals("Bluetooth")){ Intent intent = new Intent(mContext, NewActivity.class);
-                    intent.putExtra("contentTv", "b");mContext.startActivity(intent); }
+                if (modellist.get(position).getTitle().equals("Manuel with Buttons")){
+                    Intent intent = new Intent(mContext, NewActivity.class);
+                    intent.putExtra("activityName", "ManuelWithButtons");
+                    mContext.startActivity(intent);
+                }
+                if (modellist.get(position).getTitle().equals("Auto")){
+                    Intent intent = new Intent(mContext, NewActivity.class);
+                    intent.putExtra("activityName", "Auto");
+                    mContext.startActivity(intent);
+                }
             }});
 
         return view;
-    }/*
-    int maxprogramline =300;
-    String[] sname=new String[maxprogramline];
-    String[] scontent=new String[maxprogramline];
-    int[] sid= new int[maxprogramline];
-    public void adse(){
-        sname[0]="Akciğer ödemi / Akut kalp yetmezliği"; scontent[0]="a1"; sid[0] =R.layout.aa1;
-    }*/
-    //filter
-    public void filter(String charText){
-        charText = charText.toLowerCase(Locale.getDefault());
-        modellist.clear();
-        if (charText.length()==0){
-            modellist.addAll(arrayList);
-        }
-        else {
-            for (Model model : arrayList){
-                if (model.getTitle().toLowerCase(Locale.getDefault()).contains(charText)){
-                    modellist.add(model);
-                }
-
-
-
-            }
-        }
-        notifyDataSetChanged();
     }
 
 }

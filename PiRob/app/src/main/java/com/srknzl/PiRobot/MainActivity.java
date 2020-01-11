@@ -1,8 +1,10 @@
-package com.example.reeteyaz;
+package com.srknzl.PiRobot;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -12,18 +14,28 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
     ListViewAdapter adapter;
-    String[] t;
     ArrayList<Model> arrayList = new ArrayList<>();
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        Button bluetoothButton = toolbar.findViewById(R.id.bluetooth_button);
+
+        bluetoothButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
@@ -31,12 +43,11 @@ public class MainActivity extends AppCompatActivity {
         mainmenu();
 //-----------
     }
-    public void setlist(String t[],String d[],int ic[]){
+    public void setlist(Vector<String> titles, Vector<String> descs, Vector<Integer> icons) {// Title desc icon
         arrayList.clear();
-        Arrays.sort(t);
         listView = findViewById(R.id.listView);
-        for (int i =0; i<t.length; i++){
-            Model model = new Model(t[i], d[i], ic[i]);
+        for (int i =0; i<titles.size(); i++){
+            Model model = new Model(titles.elementAt(i), descs.elementAt(i), icons.elementAt(i));
             arrayList.add(model);
         }
         adapter = new ListViewAdapter(this, arrayList);
@@ -47,14 +58,19 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     public void mainmenu(){
-        t = new String[]{"Manuel", "Auto"};
-        String de[] = new String[20];
-        Arrays.fill(de, null);
-        int ic[] = new int[20];
-        Arrays.fill(ic,R.drawable.car);
-        setlist(t,de,ic);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("PiRobot Controller");
+        Vector<String> titles = new Vector<>();
+        Vector<String> descs = new Vector<>();
+        Vector<Integer> icons = new Vector<>();
+
+        titles.add("Manuel with Buttons");
+        descs.add("Control the car with buttons");
+        icons.add(R.drawable.car);
+
+        titles.add("Auto");
+        descs.add("Control the car in autonomous mode");
+        icons.add(R.drawable.car);
+
+        setlist(titles,descs,icons);
     }
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);

@@ -1,4 +1,5 @@
-package com.example.reeteyaz;
+package com.srknzl.PiRobot;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,14 +24,14 @@ public class NewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        String mContent = intent.getStringExtra("contentTv");
+        String mContent = intent.getStringExtra("activityName");
         //Acil
         String des[] = new String[100];
         Arrays.fill(des, null);
         int i[] = new int[100];
         Arrays.fill(i,R.drawable.car);
         //-----MainMenu
-        if (mContent.startsWith("m")){
+        if (mContent.equals("ManuelWithButtons")){
 
             extra(mContent);
             setContentView(R.layout.manuel_with_buttons);
@@ -43,7 +44,7 @@ public class NewActivity extends AppCompatActivity {
                 }
             });
         }
-        if (mContent.startsWith("a")){
+        if (mContent.equals("Auto")){
             extra(mContent);
             setContentView(R.layout.autonomous);
         }

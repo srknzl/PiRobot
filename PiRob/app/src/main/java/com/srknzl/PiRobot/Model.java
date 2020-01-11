@@ -1,4 +1,4 @@
-package com.example.reeteyaz;
+package com.srknzl.PiRobot;
 
 public class Model {
     String title;
