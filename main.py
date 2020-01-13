@@ -1,10 +1,9 @@
 import time
+import bluetooth
 from threading import Thread
 from gpiozero import Motor, Button, DigitalInputDevice
-from bluetooth import *
-from bluetooth import BluetoothSocket
 from signal import pause
-
+from bluetooth import *
 
 def countWheel():
     global speedSensorCounter
@@ -19,7 +18,7 @@ def listenForMessages(cs):
 
         data = data.rstrip('\r\n')
 
-        splittedData = data.split("|")
+        splittedData = data.split(" ")
         message = splittedData[0]
         if message == "l":
             leftMotor.forward(0.2)
@@ -71,7 +70,7 @@ server_socket.listen(1)
 
 uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 
-advertise_service( server_sock, "raspberrypi",
+advertise_service( server_socket, "raspberrypi",
                    service_id = uuid,
                    service_classes = [ uuid, SERIAL_PORT_CLASS ],
                    profiles = [ SERIAL_PORT_PROFILE ])
