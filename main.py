@@ -54,8 +54,8 @@ def listenForMessages(cs):
             leftMotor.forward(0.5)
             rightMotor.forward(0.5)
         elif message == "b":
-            leftMotor.backward(-0.5)
-            rightMotor.backward(-0.5)
+            leftMotor.backward(0.5)
+            rightMotor.backward(0.5)
         elif message == "wheel":
             client_socket.send("Wheel:" + str(speedSensorCounter))
             print("Wheel: ", speedSensorCounter)
