@@ -1,7 +1,7 @@
 import time
 from threading import Thread
 from gpiozero import Motor, Button, DigitalInputDevice
-import bluetooth
+from bluetooth import *
 from bluetooth import BluetoothSocket
 from signal import pause
 
@@ -61,6 +61,13 @@ server_socket = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
 server_socket.bind(("", PORT))
 server_socket.listen(1)
+
+uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
+
+advertise_service( server_sock, "raspberrypi",
+                   service_id = uuid,
+                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
+                   profiles = [ SERIAL_PORT_PROFILE ])
 
 acceptResult = server_socket.accept()
 cs = acceptResult[0]
