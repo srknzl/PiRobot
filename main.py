@@ -21,35 +21,42 @@ def listenForMessages(cs):
 
         splittedData = data.split("|")
         message = splittedData[0]
-        if message == "left":
-            leftMotor.forward(0.3)
-            rightMotor.forward(0.7)
+        if message == "l":
+            leftMotor.forward(0.2)
+            rightMotor.forward(0.8)
             # todo Add left led code
-        elif message == "right":
-            leftMotor.forward(0.7)
-            rightMotor.forward(0.3)
+        elif message == "r":
+            leftMotor.forward(0.8)
+            rightMotor.forward(0.2)
             # todo Add right led code
         elif message == "left90":
             pass  # todo Add 90 degree left turn code
         elif message == "right90":
             pass  # todo Add 90 degree left turn code
-        elif message == "speed":
+        elif message == "sp":
             if len(splittedData) != 2:
                 client_socket.send("Wrong usage of speed command" + str(splittedData))
                 print("Wrong usage of speed command", splittedData)
                 continue
-            leftMotor.value = float(splittedData[1])
-            rightMotor.value = float(splittedData[1])
-        elif message == "stop":
+            if leftMotor.value < 0:
+                leftMotor.value = -1*float(splittedData[1])
+            else: 
+                leftMotor.value = float(splittedData[1])
+
+            if rightMotor.value < 0:
+                rightMotor.value = -1*float(splittedData[1])
+            else: 
+                rightMotor.value = float(splittedData[1])
+        elif message == "s":
             leftMotor.value = 0
             rightMotor.value = 0
             # todo Add stop led code
-        elif message == "forward":
-            leftMotor.forward(leftMotor.value)
-            rightMotor.forward(rightMotor.value)
-        elif message == "backward":
-            leftMotor.backward(leftMotor.value)
-            rightMotor.backward(rightMotor.value)
+        elif message == "f":
+            leftMotor.forward(0.5)
+            rightMotor.forward(0.5)
+        elif message == "b":
+            leftMotor.backward(-0.5)
+            rightMotor.backward(-0.5)
         elif message == "wheel":
             client_socket.send("Wheel:" + str(speedSensorCounter))
             print("Wheel: ", speedSensorCounter)
