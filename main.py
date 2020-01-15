@@ -51,7 +51,7 @@ def listenForMessages(cs):
             rightMotor.value = 0
             return
         data = data.rstrip('\r\n')
-
+        print("Got: ", data)
         splittedData = data.split(" ")
         message = splittedData[0]
         if message == "left":
