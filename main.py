@@ -21,11 +21,11 @@ def listenForMessages(cs):
 
         splittedData = data.split(" ")
         message = splittedData[0]
-        if message == "l":
+        if message == "left":
             leftMotor.forward(0.2)
             rightMotor.forward(0.8)
             # todo Add left led code
-        elif message == "r":
+        elif message == "right":
             leftMotor.forward(0.8)
             rightMotor.forward(0.2)
             # todo Add right led code
@@ -33,7 +33,7 @@ def listenForMessages(cs):
             pass  # todo Add 90 degree left turn code
         elif message == "right90":
             pass  # todo Add 90 degree left turn code
-        elif message == "sp":
+        elif message == "speed":
             if len(splittedData) != 2:
                 client_socket.send("Wrong usage of speed command" + str(splittedData))
                 print("Wrong usage of speed command", splittedData)
@@ -47,14 +47,14 @@ def listenForMessages(cs):
                 rightMotor.value = -1*float(splittedData[1])
             else: 
                 rightMotor.value = float(splittedData[1])
-        elif message == "s":
+        elif message == "stop":
             leftMotor.value = 0
             rightMotor.value = 0
             # todo Add stop led code
-        elif message == "f":
+        elif message == "forward":
             leftMotor.forward(0.5)
             rightMotor.forward(0.5)
-        elif message == "b":
+        elif message == "backward":
             leftMotor.backward(0.5)
             rightMotor.backward(0.5)
         elif message == "wheel":
