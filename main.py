@@ -70,7 +70,7 @@ server_socket.bind(("", PORT))
 server_socket.listen(1)
 uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 print("Starting a rfcomm server with uuid 94f39d29-7d6d-437d-973b-fba39e49d4ee..")
-print(subprocess.check_output("echo 'discoverable on \n show B8:27:EB:49:FB:3B \n quit' | bluetoothctl",shell=True).decode("utf-8"))
+print(subprocess.check_output("echo  'discoverable on' | bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ",shell=True).decode("utf-8"))
 
 advertise_service( server_socket, "raspberrypi",
                    service_id = uuid,
