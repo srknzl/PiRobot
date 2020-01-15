@@ -1,9 +1,10 @@
-import time
 import bluetooth
 from threading import Thread
 from gpiozero import Motor, Button, DigitalInputDevice
 from signal import pause
 from bluetooth import *
+import subprocess
+
 
 def countWheel():
     global speedSensorCounter
@@ -67,13 +68,13 @@ server_socket = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
 server_socket.bind(("", PORT))
 server_socket.listen(1)
-"""
 uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
+subprocess.call(['sudo', 'hciconfig', 'hci0', 'piscan'])
 
 advertise_service( server_socket, "raspberrypi",
                    service_id = uuid,
                    service_classes = [ uuid, SERIAL_PORT_CLASS ],
-                   profiles = [ SERIAL_PORT_PROFILE ])"""
+                   profiles = [ SERIAL_PORT_PROFILE ])
 
 acceptResult = server_socket.accept()
 cs = acceptResult[0]
