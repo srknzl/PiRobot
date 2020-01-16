@@ -10,6 +10,7 @@ import subprocess
 
 def turnOnLedForRight():
     frontRightLed.blink(on_color=(1, 0.4, 0), off_color=(0, 0, 0))
+    backRightLed.blink(on_color=(1, 0.4, 0), off_color=(0, 0, 0))
 
 def countWheel():
     global speedSensorCounter
@@ -109,8 +110,8 @@ def listenForMessages(cs):
             print("Wheel: ", speedSensorCounter)
         # print(data)
 
-discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
-discoveryEnabler.start()
+#discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
+#discoveryEnabler.start()
 print(subprocess.check_output(
                 "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
                 "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
