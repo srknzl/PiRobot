@@ -1,16 +1,47 @@
 import bluetooth
 import time
 from threading import Thread
-from gpiozero import Motor, Button, RGBLED
+from gpiozero import Motor, Button, RGBLED, PWMLED
 from colorzero import Color
 from signal import pause
 from bluetooth import *
 import subprocess
 
 
-def turnOnLedForRight():
-    frontRightLed.blink(on_color=(1, 0.4, 0), off_color=(0, 0, 0))
-    backRightLed.blink(on_color=(1, 0.4, 0), off_color=(0, 0, 0))
+def ledsWhenTurnRight():
+    rightGreen.blink(0.3, 0.3)
+    rightRed.blink(0.3, 0.3)
+    leftGreen.off()
+    leftRed.off()
+
+
+def ledsWhenTurnLeft():
+    leftGreen.blink(0.3, 0.3)
+    leftRed.blink(0.3, 0.3)
+    rightGreen.off()
+    rightRed.off()
+
+
+def ledsWhenStop():
+    leftRed.on()
+    rightRed.on()
+    leftGreen.off()
+    rightGreen.off()
+
+
+def ledsWhenNotConnected():
+    leftRed.blink()
+    rightRed.blink()
+    leftGreen.off()
+    rightGreen.off()
+
+
+def turnOffLeds():
+    leftRed.off()
+    rightRed.off()
+    leftGreen.off()
+    rightGreen.off()
+
 
 def countWheel():
     global speedSensorCounter
@@ -61,7 +92,7 @@ def listenForMessages(cs):
             connecter = Thread(target=connect, args=(), daemon=True)
             connecter.start()
             # stop and connect again
-            # todo Adjust leds to unconnected state
+            ledsWhenNotConnected()
             leftMotor.value = 0
             rightMotor.value = 0
             return
@@ -72,11 +103,11 @@ def listenForMessages(cs):
         if message == "left":
             leftMotor.forward(0.2)
             rightMotor.forward(0.8)
-            # todo Add left led code
+            ledsWhenTurnLeft()
         elif message == "right":
             leftMotor.forward(0.8)
             rightMotor.forward(0.2)
-            # todo Add right led code
+            ledsWhenTurnRight()
         elif message == "left90":
             pass  # todo Add 90 degree left turn code
         elif message == "right90":
@@ -98,20 +129,22 @@ def listenForMessages(cs):
         elif message == "stop":
             leftMotor.value = 0
             rightMotor.value = 0
-            # todo Add stop led code
+            ledsWhenStop()
         elif message == "forward":
             leftMotor.forward(0.5)
             rightMotor.forward(0.5)
+            turnOffLeds()
         elif message == "backward":
             leftMotor.backward(0.5)
             rightMotor.backward(0.5)
+            turnOffLeds()
         elif message == "wheel":
             client_socket.send("Wheel:" + str(speedSensorCounter))
             print("Wheel: ", speedSensorCounter)
         # print(data)
 
-#discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
-#discoveryEnabler.start()
+discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
+discoveryEnabler.start()
 print(subprocess.check_output(
                 "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
                 "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
@@ -122,14 +155,10 @@ connect()
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
 
-frontRightLed = RGBLED(2, 10, 3)  # Blue is GPIO3 for every led and they are not used
-frontLeftLed = RGBLED(15, 14, 3)
-backRightLed = RGBLED(2, 10, 3)
-backLeftLed = RGBLED(15, 14, 3)
-
-turnOnLedForRight()
-
-frontRightLed.color = Color('red')
+leftRed = PWMLED(15)
+leftGreen = PWMLED(14)
+rightRed = PWMLED(2)
+rightGreen = PWMLED(10)
 
 speedSensorCounter = 0
 speedSensor = Button(17)
