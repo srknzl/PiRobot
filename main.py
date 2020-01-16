@@ -1,6 +1,7 @@
 import bluetooth
+import time
 from threading import Thread
-from gpiozero import Motor, Button, DigitalInputDevice
+from gpiozero import Motor, Button
 from signal import pause
 from bluetooth import *
 import subprocess
@@ -20,9 +21,7 @@ def connect():
     server_socket.listen(1)
     uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
     print("Starting a rfcomm server with uuid 94f39d29-7d6d-437d-973b-fba39e49d4ee..")
-    print(subprocess.check_output(
-        "echo  'discoverable on' | bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
-        "utf-8"))
+
 
     advertise_service(server_socket, "raspberrypi",
                       service_id=uuid,
@@ -35,6 +34,16 @@ def connect():
     print("Accepted connection from ", address)
     listener = Thread(target=listenForMessages, args=(cs,), daemon=True)
     listener.start()
+
+
+def discoveryEnabler():
+    while True:
+        time.sleep(5)
+        discoverable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Discoverable: ", shell=True).decode("utf-8")
+        if 'no' in discoverable_result:
+            print(subprocess.check_output(
+                "echo  'discoverable on' | bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
+                "utf-8"))
 
 
 def listenForMessages(cs):
@@ -97,6 +106,9 @@ def listenForMessages(cs):
 
 
 connect()
+
+discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
+discoveryEnabler.start()
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
