@@ -40,10 +40,13 @@ def discoveryEnabler():
     while True:
         time.sleep(5)
         discoverable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Discoverable: ", shell=True).decode("utf-8")
-        if 'no' in discoverable_result:
-            print(subprocess.check_output(
-                "echo  'discoverable on' | bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
-                "utf-8"))
+        pairable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Pairable: ", shell=True).decode("utf-8")
+
+        if 'no' in discoverable_result or 'no' in pairable_result:
+            print(subprocess.check_output("echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
+                                          "bluetoothctl  && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ",
+                                          shell=True).decode("utf-8"))
+            print(subprocess.check_output("echo  'agent on' | bluetoothctl && echo  'default-agent' | bluetoothctl",shell=True).decode("utf-8"))
 
 
 def listenForMessages(cs):
@@ -107,7 +110,7 @@ def listenForMessages(cs):
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
-                "echo  'discoverable on' | bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
+                "echo  'discoverable on' | bluetoothctl && echo  'pairable on' | bluetoothctl  && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
                 "utf-8"))
 connect()
 
