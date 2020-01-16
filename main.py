@@ -38,7 +38,7 @@ def connect():
 
 def discoveryEnabler():
     while True:
-        time.sleep(5)
+        time.sleep(10)
         #discoverable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Discoverable: ", shell=True).decode("utf-8")
         #pairable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Pairable: ", shell=True).decode("utf-8")
 
