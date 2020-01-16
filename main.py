@@ -47,7 +47,7 @@ def turnOffBuzzer():
 
 
 def beep():
-    buzzer.beep(0.5,0.5)
+    buzzer.beep(0.3,0.3)
 
 
 def countWheel():
@@ -107,15 +107,16 @@ def listenForMessages(cs):
         data = data.rstrip('\r\n')
         splittedData = data.split(" ")
         message = splittedData[0]
-        turnOffBuzzer()
         if message == "left":
             leftMotor.forward(0.2)
             rightMotor.forward(0.8)
             ledsWhenTurnLeft()
+            turnOffBuzzer()
         elif message == "right":
             leftMotor.forward(0.8)
             rightMotor.forward(0.2)
             ledsWhenTurnRight()
+            turnOffBuzzer()
         elif message == "left90":
             pass  # todo Add 90 degree left turn code
         elif message == "right90":
@@ -138,10 +139,12 @@ def listenForMessages(cs):
             leftMotor.value = 0
             rightMotor.value = 0
             ledsWhenStop()
+            turnOffBuzzer()
         elif message == "forward":
             leftMotor.forward(0.5)
             rightMotor.forward(0.5)
             turnOffLeds()
+            turnOffBuzzer()
         elif message == "backward":
             leftMotor.backward(0.5)
             rightMotor.backward(0.5)
@@ -169,8 +172,6 @@ connect()
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
-
-
 
 buzzer = Buzzer(3)
 beep()
