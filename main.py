@@ -67,6 +67,7 @@ def connect():
     acceptResult = server_socket.accept()
     cs = acceptResult[0]
     address = acceptResult[1]
+    turnOffLeds()
     print("Accepted connection from ", address)
     listener = Thread(target=listenForMessages, args=(cs,), daemon=True)
     listener.start()
@@ -150,6 +151,7 @@ print(subprocess.check_output(
                 "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
                 "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
                 "utf-8"))
+ledsWhenNotConnected()
 connect()
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
