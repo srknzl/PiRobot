@@ -45,8 +45,7 @@ def discoveryEnabler():
         #if 'no' in discoverable_result or 'no' in pairable_result:
         print(subprocess.check_output( # pair without pin ref: https://stackoverflow.com/a/34751404/9483495
                 "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
-                "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
-                "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
+                "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent' | bluetoothctl", shell=True).decode(
                 "utf-8"))
 
 def listenForMessages(cs):
