@@ -1,7 +1,8 @@
 import bluetooth
 import time
 from threading import Thread
-from gpiozero import Motor, Button
+from gpiozero import Motor, Button, RGBLED
+from colorzero import Color
 from signal import pause
 from bluetooth import *
 import subprocess
@@ -116,6 +117,12 @@ connect()
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
+frontRightLed = RGBLED(2,4,3)  # Blue is GPIO3 for every led and they are not used
+frontLeftLed = RGBLED(15,14,3)
+backRightLed = RGBLED(2,4,3)
+backLeftLed = RGBLED(15,14,3)
+
+frontRightLed.color = Color('red')
 
 speedSensorCounter = 0
 speedSensor = Button(17)
