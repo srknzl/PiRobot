@@ -39,11 +39,11 @@ def connect():
 def discoveryEnabler():
     while True:
         time.sleep(5)
-        discoverable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Discoverable: ", shell=True).decode("utf-8")
-        pairable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Pairable: ", shell=True).decode("utf-8")
+        #discoverable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Discoverable: ", shell=True).decode("utf-8")
+        #pairable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Pairable: ", shell=True).decode("utf-8")
 
-        if 'no' in discoverable_result or 'no' in pairable_result:
-            print(subprocess.check_output( # pair without pin ref: https://stackoverflow.com/a/34751404/9483495
+        #if 'no' in discoverable_result or 'no' in pairable_result:
+        print(subprocess.check_output( # pair without pin ref: https://stackoverflow.com/a/34751404/9483495
                 "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
                 "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
                 "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
