@@ -43,11 +43,11 @@ def discoveryEnabler():
         pairable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Pairable: ", shell=True).decode("utf-8")
 
         if 'no' in discoverable_result or 'no' in pairable_result:
-            print(subprocess.check_output("echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
-                                          "bluetoothctl  && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ",
-                                          shell=True).decode("utf-8"))
-            print(subprocess.check_output("echo  'agent on' | bluetoothctl && echo  'default-agent' | bluetoothctl",shell=True).decode("utf-8"))
-
+            print(subprocess.check_output( # pair without pin ref: https://stackoverflow.com/a/34751404/9483495
+                "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
+                "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
+                "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
+                "utf-8"))
 
 def listenForMessages(cs):
     client_socket = cs  # type: BluetoothSocket
@@ -110,11 +110,11 @@ def listenForMessages(cs):
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
-                "echo  'discoverable on' | bluetoothctl && echo  'pairable on' | bluetoothctl  && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
+                "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
+                "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
+                "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
                 "utf-8"))
 connect()
-
-
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
