@@ -104,11 +104,14 @@ def listenForMessages(cs):
             print("Wheel: ", speedSensorCounter)
         # print(data)
 
-
-connect()
-
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
+print(subprocess.check_output(
+                "echo  'discoverable on' | bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
+                "utf-8"))
+connect()
+
+
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
