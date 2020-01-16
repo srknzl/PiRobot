@@ -1,8 +1,7 @@
 import bluetooth
 import time
 from threading import Thread
-from gpiozero import Motor, Button, RGBLED, PWMLED
-from colorzero import Color
+from gpiozero import Motor, Button, PWMLED, Buzzer
 from signal import pause
 from bluetooth import *
 import subprocess
@@ -41,6 +40,14 @@ def turnOffLeds():
     rightRed.off()
     leftGreen.off()
     rightGreen.off()
+
+
+def turnOffBuzzer():
+    buzzer.off()
+
+
+def beep():
+    buzzer.beep(0.5,0.5)
 
 
 def countWheel():
@@ -98,9 +105,9 @@ def listenForMessages(cs):
             rightMotor.value = 0
             return
         data = data.rstrip('\r\n')
-        print("Got: ", data)
         splittedData = data.split(" ")
         message = splittedData[0]
+        turnOffBuzzer()
         if message == "left":
             leftMotor.forward(0.2)
             rightMotor.forward(0.8)
@@ -139,6 +146,7 @@ def listenForMessages(cs):
             leftMotor.backward(0.5)
             rightMotor.backward(0.5)
             turnOffLeds()
+            beep()
         elif message == "wheel":
             client_socket.send("Wheel:" + str(speedSensorCounter))
             print("Wheel: ", speedSensorCounter)
@@ -162,6 +170,8 @@ leftGreen = PWMLED(14)
 rightRed = PWMLED(2)
 rightGreen = PWMLED(10)
 
+buzzer = Buzzer(3)
+beep()
 speedSensorCounter = 0
 speedSensor = Button(17)
 speedSensor.when_pressed = countWheel
