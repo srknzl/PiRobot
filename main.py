@@ -159,16 +159,18 @@ print(subprocess.check_output(
                 "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
                 "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
                 "utf-8"))
+leftRed = PWMLED(15)
+leftGreen = PWMLED(14)
+rightRed = PWMLED(2)
+rightGreen = PWMLED(10)
 ledsWhenNotConnected()
+
 connect()
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
 
-leftRed = PWMLED(15)
-leftGreen = PWMLED(14)
-rightRed = PWMLED(2)
-rightGreen = PWMLED(10)
+
 
 buzzer = Buzzer(3)
 beep()
