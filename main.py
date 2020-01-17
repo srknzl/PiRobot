@@ -203,11 +203,13 @@ def listenForMessages(cs):
                     leftMotor.value = -1 * 0.4
                 else:
                     leftMotor.value = 0.4
+                rightMotor.value = right * scaleFactor
             elif abs(right * scaleFactor) < 0.4:
                 if right < 0:
                     rightMotor.value = -1 * 0.4
                 else:
                     rightMotor.value = 0.4
+                leftMotor.value = left * scaleFactor
             else:
                 leftMotor.value = left * scaleFactor
                 rightMotor.value = right * scaleFactor
