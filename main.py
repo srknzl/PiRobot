@@ -43,7 +43,7 @@ def turnOffLeds():
 
 
 def stopSomeTimeLater():
-    time.sleep(1)
+    time.sleep(0.7)
     leftMotor.stop()
     rightMotor.stop()
     ledsWhenStop()
@@ -113,8 +113,8 @@ def listenForMessages(cs):
         if message == "left":
             #leftMotor.forward(0.2)
             #rightMotor.forward(0.8)
-            leftMotor.backward(0.5)
-            rightMotor.forward(0.5)
+            leftMotor.backward(0.7)
+            rightMotor.forward(0.7)
             stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
             stopper.start()
             ledsWhenTurnLeft()
@@ -122,8 +122,8 @@ def listenForMessages(cs):
         elif message == "right":
             #leftMotor.forward(0.8)
             #rightMotor.forward(0.2)
-            leftMotor.forward(0.5)
-            rightMotor.backward(0.5)
+            leftMotor.forward(0.7)
+            rightMotor.backward(0.7)
             stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
             stopper.start()
             ledsWhenTurnRight()
