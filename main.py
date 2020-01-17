@@ -42,6 +42,13 @@ def turnOffLeds():
     rightGreen.off()
 
 
+def stopSomeTimeLater():
+    time.sleep(1)
+    leftMotor.stop()
+    rightMotor.stop()
+    ledsWhenStop()
+
+
 def turnOffBuzzer():
     buzzer.off()
 
@@ -104,13 +111,21 @@ def listenForMessages(cs):
         splittedData = data.split(" ")
         message = splittedData[0]
         if message == "left":
-            leftMotor.forward(0.2)
-            rightMotor.forward(0.8)
+            #leftMotor.forward(0.2)
+            #rightMotor.forward(0.8)
+            leftMotor.backward(0.5)
+            rightMotor.forward(0.5)
+            stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
+            stopper.start()
             ledsWhenTurnLeft()
             turnOffBuzzer()
         elif message == "right":
-            leftMotor.forward(0.8)
-            rightMotor.forward(0.2)
+            #leftMotor.forward(0.8)
+            #rightMotor.forward(0.2)
+            leftMotor.forward(0.5)
+            rightMotor.backward(0.5)
+            stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
+            stopper.start()
             ledsWhenTurnRight()
             turnOffBuzzer()
         elif message == "left90":
