@@ -1,11 +1,25 @@
 import bluetooth
 import time
 from threading import Thread
-from gpiozero import Motor, Button, PWMLED, Buzzer
+from gpiozero import Motor, PWMLED, Buzzer, DistanceSensor
 from signal import pause
 from bluetooth import *
 import subprocess
 import enum
+
+
+def senseDistance():
+    global distance
+    while True:
+        distance = sensor.distance * 100
+        print('Distance to nearest object is', distance , 'cm')
+        if distance < 30:
+            ledsWhenTurnRight()
+        elif 50 > distance >=30:
+            ledsWhenTurnLeft()
+        elif distance >= 50:
+            ledsWhenNotConnected()
+        time.sleep(1)
 
 
 def ledsWhenTurnRight():
@@ -313,6 +327,13 @@ speed = 0.5
 # STOPTIME = 0.43 # Konya :D
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
+
+distance = 0 # in cms
+sensor = DistanceSensor(20, 21)
+
+distanceSensor = Thread(target=senseDistance, args=(), daemon=True)
+distanceSensor.start()
+
 print(subprocess.check_output(
     "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
     "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
