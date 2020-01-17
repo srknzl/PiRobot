@@ -6,6 +6,11 @@ from signal import pause
 from bluetooth import *
 import subprocess
 import enum
+import math
+
+
+
+
 
 def ledsWhenTurnRight():
     rightGreen.blink(0.3, 0.3)
@@ -40,6 +45,7 @@ def turnOffLeds():
     rightRed.off()
     leftGreen.off()
     rightGreen.off()
+
 
 """
 def stopSomeTimeLater():
@@ -114,23 +120,54 @@ def listenForMessages(cs):
         if message == "left":
             leftMotor.backward(speed)
             rightMotor.forward(speed)
-            #stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
-            #stopper.start()
+            # stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
+            # stopper.start()
             ledsWhenTurnLeft()
             turnOffBuzzer()
             currentOperation = Operation.left
         elif message == "right":
             leftMotor.forward(speed)
             rightMotor.backward(speed)
-            #stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
-            #stopper.start()
+            # stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
+            # stopper.start()
             ledsWhenTurnRight()
             turnOffBuzzer()
             currentOperation = Operation.right
         elif message == "joystick":
-            x = splittedData[1]
-            y = splittedData[2]
-            pass
+            angle = splittedData[1]
+            movement = splittedData[2]
+
+            scaleFactor = 1.0*movement/100
+            left = 0
+            right = 0
+            if angle == 0:
+                left = 1
+                right = 0
+            elif angle == 90:
+                left = 1
+                right = 1
+            elif angle == 180:
+                left = 0
+                right = 1
+            elif angle == 270:
+                left = -1
+                right = -1
+            elif angle > 0 and angle < 90:
+                left = 1
+                right = (angle*1.0)/90
+            elif angle > 90 and angle < 180:
+                left = 2 - (angle*1.0)/90
+                right = 1
+            elif angle > 180 and angle < 270:
+                left = 2 - (1.0*angle)/90
+                right = 5- (1.0*angle)/45
+            elif angle > 270:
+                left = -1 + (2.0*(angle-270))/90
+                right = -1 + (1.0*(angle-270))/90
+
+            leftMotor.value = left*scaleFactor
+            rightMotor.value = right*scaleFactor
+
         elif message == "speed":
             if len(splittedData) != 2:
                 client_socket.send("Wrong usage of speed command" + str(splittedData))
@@ -179,9 +216,10 @@ class Operation(enum.Enum):
     stop = 5
     joystick_control = 6
 
+
 currentOperation = Operation.stop
 speed = 0.5
-#STOPTIME = 0.43 # Konya :D
+# STOPTIME = 0.43 # Konya :D
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
