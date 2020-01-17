@@ -155,21 +155,21 @@ def listenForMessages(cs):
                 right = -1
             elif 0 < angle < 90:
                 left = 1
-                right = -1 + 2*(angle * 1.0) / 90
+                right = -1 + 2 * (angle * 1.0) / 90
             elif 90 < angle < 180:
-                left = 1-((angle-90) * 2.0) / 90
+                left = 1 - ((angle - 90) * 2.0) / 90
                 right = 1
             elif 180 < angle < 270:
                 left = -1
-                right = 1 - ((angle-180) * 2.0) / 90
+                right = 1 - ((angle - 180) * 2.0) / 90
             elif angle > 270:
-                left = -1 + ((angle-270) * 2.0) / 90
+                left = -1 + ((angle - 270) * 2.0) / 90
                 right = -1
 
-
-
-            assert 1 >= left * scaleFactor >= -1, "left: " + str(left) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(left * scaleFactor)
-            assert 1 >= right * scaleFactor >= -1, "right: " + str(right) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(right * scaleFactor)
+            assert 1 >= left * scaleFactor >= -1, "left: " + str(left) + ", scaleFactor: " + str(
+                scaleFactor) + ", mult: " + str(left * scaleFactor)
+            assert 1 >= right * scaleFactor >= -1, "right: " + str(right) + ", scaleFactor: " + str(
+                scaleFactor) + ", mult: " + str(right * scaleFactor)
 
             """
             if abs(right * scaleFactor) > 3 * abs(left*scaleFactor):
@@ -195,21 +195,23 @@ def listenForMessages(cs):
             print("left:", left * scaleFactor)
             print("right:", right * scaleFactor)
 
-            if abs(left*scaleFactor) < 0.4:
+            if abs(left * scaleFactor) < 0.4 and abs(right * scaleFactor) < 0.4:
+                leftMotor.value = 0
+                rightMotor.value = 0
+            elif abs(left * scaleFactor) < 0.4:
                 if left < 0:
                     leftMotor.value = -1 * 0.4
                 else:
                     leftMotor.value = 0.4
-            else:
-                leftMotor.value = left * scaleFactor
-
-            if abs(right*scaleFactor) < 0.4:
+            elif abs(right * scaleFactor) < 0.4:
                 if right < 0:
                     rightMotor.value = -1 * 0.4
                 else:
                     rightMotor.value = 0.4
             else:
+                leftMotor.value = left * scaleFactor
                 rightMotor.value = right * scaleFactor
+
 
 
 
