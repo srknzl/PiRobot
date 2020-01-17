@@ -108,6 +108,7 @@ def listenForMessages(cs):
         data = data.rstrip('\r\n')
         splittedData = data.split(" ")
         message = splittedData[0]
+        print(speedSensor.value)
         if message == "left":
             leftMotor.forward(0.2)
             rightMotor.forward(0.8)
