@@ -141,6 +141,41 @@ def listenForMessages(cs):
             scaleFactor = (1.0 * movement) / 100
             left = 0
             right = 0
+
+            if 20 >= angle > 0: # Turn right fast
+                left = 1
+                right = 0.3
+            elif 70 >= angle > 20: # Turn right slowly
+                left = 1
+                right = 0.6
+            elif 110 >= angle > 70: # Go forward
+                left = 1
+                right = 1
+            elif 160 >= angle > 110: # Turn left slowly
+                left = 0.6
+                right = 1
+            elif 180 >= angle > 160: # Turn left fast
+                left = 0.3
+                right = 1
+            elif 200 >= angle > 180: # Turn back left fast
+                left = -0.3
+                right = -1
+            elif 250 >= angle > 200: # Turn back left slowly
+                left = -0.6
+                right = -1
+            elif 290 >= angle > 250: # Go back
+                left = -1
+                right = -1
+            elif 340 >= angle > 290: # Turn back right slowly
+                left = -1
+                right = -0.6
+            elif angle > 340: # Turn back right fast
+                left = -1
+                right = -0.3
+
+            leftMotor.value = left * scaleFactor
+            rightMotor.value = right * scaleFactor
+            """
             if angle == 0:
                 left = 1
                 right = -1
@@ -193,7 +228,7 @@ def listenForMessages(cs):
             else:
                 leftMotor.value = left * scaleFactor
                 rightMotor.value = right * scaleFactor
-
+            """
         elif message == "speed":
             if len(splittedData) != 2:
                 client_socket.send("Wrong usage of speed command" + str(splittedData))
