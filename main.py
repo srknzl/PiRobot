@@ -173,6 +173,15 @@ def listenForMessages(cs):
                 left = -1
                 right = -0.3
 
+            if not 1 >= left * scaleFactor >= -1:
+                print("Something is not right with this motor value")
+                continue
+            if not 1 >= right * scaleFactor >= -1:
+                print("Something is not right with this motor value")
+                continue
+            print("left:", left * scaleFactor)
+            print("right:", right * scaleFactor)
+
             leftMotor.value = left * scaleFactor
             rightMotor.value = right * scaleFactor
             """
