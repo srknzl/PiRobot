@@ -9,9 +9,6 @@ import enum
 import math
 
 
-
-
-
 def ledsWhenTurnRight():
     rightGreen.blink(0.3, 0.3)
     rightRed.blink(0.3, 0.3)
@@ -137,7 +134,7 @@ def listenForMessages(cs):
             angle = int(splittedData[1])
             movement = int(splittedData[2])
 
-            scaleFactor = 1.0*movement/100
+            scaleFactor = (1.0 * movement) / 100
             left = 0
             right = 0
             if angle == 0:
@@ -152,21 +149,27 @@ def listenForMessages(cs):
             elif angle == 270:
                 left = -1
                 right = -1
-            elif angle > 0 and angle < 90:
+            elif 0 < angle < 90:
                 left = 1
-                right = (angle*1.0)/90
-            elif angle > 90 and angle < 180:
-                left = 2 - (angle*1.0)/90
+                right = (angle * 1.0) / 90
+            elif 90 < angle < 180:
+                left = 2 - (angle * 1.0) / 90
                 right = 1
-            elif angle > 180 and angle < 270:
-                left = 2 - (1.0*angle)/90
-                right = 5- (1.0*angle)/45
+            elif 180 < angle < 270:
+                left = 2 - (1.0 * angle) / 90
+                right = 5 - (1.0 * angle) / 45
             elif angle > 270:
-                left = -1 + (2.0*(angle-270))/90
-                right = -1 + (1.0*(angle-270))/90
+                left = -1 + (2.0 * (angle - 270)) / 90
+                right = -1 + (1.0 * (angle - 270)) / 90
 
-            leftMotor.value = left*scaleFactor
-            rightMotor.value = right*scaleFactor
+            assert (1 >= left * scaleFactor >= -1,
+                    "left: " + str(left) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(left * scaleFactor))
+            assert (1 >= right * scaleFactor >= -1,
+                    "right: " + str(right) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(
+                        right * scaleFactor))
+
+            leftMotor.value = left * scaleFactor
+            rightMotor.value = right * scaleFactor
 
         elif message == "speed":
             if len(splittedData) != 2:
