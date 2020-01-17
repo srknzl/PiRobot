@@ -180,15 +180,15 @@ def listenForMessages(cs):
                 rightMotor.value = 0
             elif abs(left * scaleFactor) < 0.4:
                 if left < 0:
-                    leftMotor.value = -1 * 0.4
+                    leftMotor.value = -1 * max(0.4, abs(right * scaleFactor)/2)
                 else:
-                    leftMotor.value = 0.4
+                    leftMotor.value = max(0.4, abs(right * scaleFactor)/2)
                 rightMotor.value = right * scaleFactor
             elif abs(right * scaleFactor) < 0.4:
                 if right < 0:
-                    rightMotor.value = -1 * 0.4
+                    rightMotor.value = -1 * max(0.4, abs(left * scaleFactor)/2)
                 else:
-                    rightMotor.value = 0.4
+                    rightMotor.value = max(0.4, abs(left * scaleFactor)/2)
                 leftMotor.value = left * scaleFactor
             else:
                 leftMotor.value = left * scaleFactor
