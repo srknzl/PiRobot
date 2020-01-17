@@ -162,11 +162,8 @@ def listenForMessages(cs):
                 left = -1 + (2.0 * (angle - 270)) / 90
                 right = -1 + (1.0 * (angle - 270)) / 90
 
-            assert (1 >= left * scaleFactor >= -1,
-                    "left: " + str(left) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(left * scaleFactor))
-            assert (1 >= right * scaleFactor >= -1,
-                    "right: " + str(right) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(
-                        right * scaleFactor))
+            assert 1 >= left * scaleFactor >= -1, "left: " + str(left) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(left * scaleFactor)
+            assert 1 >= right * scaleFactor >= -1, "right: " + str(right) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(right * scaleFactor)
 
             leftMotor.value = left * scaleFactor
             rightMotor.value = right * scaleFactor
