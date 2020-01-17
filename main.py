@@ -134,7 +134,7 @@ def listenForMessages(cs):
                 client_socket.send("Wrong usage of speed command" + str(splittedData))
                 print("Wrong usage of speed command", splittedData)
                 continue
-            speed = splittedData[1]
+            speed = float(splittedData[1])
             if leftMotor.value < 0:
                 leftMotor.value = -1 * float(splittedData[1])
             else:
