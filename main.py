@@ -171,6 +171,7 @@ def listenForMessages(cs):
             assert 1 >= left * scaleFactor >= -1, "left: " + str(left) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(left * scaleFactor)
             assert 1 >= right * scaleFactor >= -1, "right: " + str(right) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(right * scaleFactor)
 
+            """
             if abs(right * scaleFactor) > 3 * abs(left*scaleFactor):
                 rightMotor.value = right * scaleFactor
                 if left < 0:
@@ -190,6 +191,31 @@ def listenForMessages(cs):
             else:
                 leftMotor.value = left * scaleFactor
                 rightMotor.value = right * scaleFactor
+"""
+
+            if abs(right * scaleFactor) > 0.6 and abs(left*scaleFactor) < 0.4:
+                rightMotor.value = right * scaleFactor
+                if left < 0:
+                    leftMotor.value = -1 * 0.4
+                elif left > 0:
+                    leftMotor.value = 0.4
+                else:
+                    leftMotor.value = 0
+            elif abs(left * scaleFactor) > 0.6 and abs(right*scaleFactor) < 0.4:
+                leftMotor.value = left * scaleFactor
+                if right < 0:
+                    rightMotor.value = -1 * 0.4
+                elif right > 0:
+                    rightMotor.value = 0.4
+                else:
+                    rightMotor.value = 0
+            else:
+                leftMotor.value = left * scaleFactor
+                rightMotor.value = right * scaleFactor
+
+
+
+
 
         elif message == "speed":
             if len(splittedData) != 2:
