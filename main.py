@@ -95,6 +95,7 @@ def discoveryEnabler():
 
 
 def listenForMessages(cs):
+    global speed
     client_socket = cs  # type: BluetoothSocket
     while True:
         try:
@@ -111,15 +112,15 @@ def listenForMessages(cs):
         splittedData = data.split(" ")
         message = splittedData[0]
         if message == "left":
-            leftMotor.backward(1)
-            rightMotor.forward(1)
+            leftMotor.backward(speed)
+            rightMotor.forward(speed)
             #stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
             #stopper.start()
             ledsWhenTurnLeft()
             turnOffBuzzer()
         elif message == "right":
-            leftMotor.forward(1)
-            rightMotor.backward(1)
+            leftMotor.forward(speed)
+            rightMotor.backward(speed)
             #stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
             #stopper.start()
             ledsWhenTurnRight()
@@ -133,6 +134,7 @@ def listenForMessages(cs):
                 client_socket.send("Wrong usage of speed command" + str(splittedData))
                 print("Wrong usage of speed command", splittedData)
                 continue
+            speed = splittedData[1]
             if leftMotor.value < 0:
                 leftMotor.value = -1 * float(splittedData[1])
             else:
@@ -142,25 +144,26 @@ def listenForMessages(cs):
                 rightMotor.value = -1 * float(splittedData[1])
             else:
                 rightMotor.value = float(splittedData[1])
+
         elif message == "stop":
             leftMotor.value = 0
             rightMotor.value = 0
             ledsWhenStop()
             turnOffBuzzer()
         elif message == "forward":
-            leftMotor.forward(0.5)
-            rightMotor.forward(0.5)
+            leftMotor.forward(speed)
+            rightMotor.forward(speed)
             turnOffLeds()
             turnOffBuzzer()
         elif message == "backward":
-            leftMotor.backward(0.5)
-            rightMotor.backward(0.5)
+            leftMotor.backward(speed)
+            rightMotor.backward(speed)
             turnOffLeds()
             beep()
         # print(data)
 
-
-STOPTIME = 0.43 # Konya :D
+speed = 0.5
+#STOPTIME = 0.43 # Konya :D
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
