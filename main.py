@@ -5,7 +5,7 @@ from gpiozero import Motor, Button, PWMLED, Buzzer
 from signal import pause
 from bluetooth import *
 import subprocess
-
+import enum
 
 def ledsWhenTurnRight():
     rightGreen.blink(0.3, 0.3)
@@ -95,7 +95,7 @@ def discoveryEnabler():
 
 
 def listenForMessages(cs):
-    global speed
+    global speed, currentOperation
     client_socket = cs  # type: BluetoothSocket
     while True:
         try:
@@ -118,6 +118,7 @@ def listenForMessages(cs):
             #stopper.start()
             ledsWhenTurnLeft()
             turnOffBuzzer()
+            currentOperation = Operation.left
         elif message == "right":
             leftMotor.forward(speed)
             rightMotor.backward(speed)
@@ -125,6 +126,7 @@ def listenForMessages(cs):
             #stopper.start()
             ledsWhenTurnRight()
             turnOffBuzzer()
+            currentOperation = Operation.right
         elif message == "joystick":
             x = splittedData[1]
             y = splittedData[2]
@@ -135,33 +137,49 @@ def listenForMessages(cs):
                 print("Wrong usage of speed command", splittedData)
                 continue
             speed = float(splittedData[1])
-            if leftMotor.value < 0:
-                leftMotor.value = -1 * float(splittedData[1])
-            else:
-                leftMotor.value = float(splittedData[1])
-
-            if rightMotor.value < 0:
-                rightMotor.value = -1 * float(splittedData[1])
-            else:
-                rightMotor.value = float(splittedData[1])
+            if currentOperation == Operation.backward:
+                leftMotor.backward(speed)
+                rightMotor.backward(speed)
+            elif currentOperation == Operation.forward:
+                leftMotor.forward(speed)
+                rightMotor.forward(speed)
+            elif currentOperation == Operation.left:
+                leftMotor.backward(speed)
+                rightMotor.forward(speed)
+            elif currentOperation == Operation.right:
+                leftMotor.forward(speed)
+                rightMotor.backward(speed)
 
         elif message == "stop":
             leftMotor.value = 0
             rightMotor.value = 0
             ledsWhenStop()
             turnOffBuzzer()
+            currentOperation = Operation.stop
         elif message == "forward":
             leftMotor.forward(speed)
             rightMotor.forward(speed)
             turnOffLeds()
             turnOffBuzzer()
+            currentOperation = Operation.forward
         elif message == "backward":
             leftMotor.backward(speed)
             rightMotor.backward(speed)
             turnOffLeds()
             beep()
+            currentOperation = Operation.backward
         # print(data)
 
+
+class Operation(enum.Enum):
+    forward = 1
+    backward = 2
+    left = 3
+    right = 4
+    stop = 5
+    joystick_control = 6
+
+currentOperation = Operation.stop
 speed = 0.5
 #STOPTIME = 0.43 # Konya :D
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
