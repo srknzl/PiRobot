@@ -195,25 +195,22 @@ def listenForMessages(cs):
             print("left:", left * scaleFactor)
             print("right:", right * scaleFactor)
 
-            if abs(right * scaleFactor) > 0.75 and abs(left*scaleFactor) < 0.5:
-                rightMotor.value = right * scaleFactor
+            if abs(left*scaleFactor) < 0.4:
                 if left < 0:
-                    leftMotor.value = -1 * 0.5
-                elif left > 0:
-                    leftMotor.value = 0.5
+                    leftMotor.value = -1 * 0.4
                 else:
-                    leftMotor.value = 0
-            elif abs(left * scaleFactor) > 0.75 and abs(right*scaleFactor) < 0.5:
-                leftMotor.value = left * scaleFactor
-                if right < 0:
-                    rightMotor.value = -1 * 0.5
-                elif right > 0:
-                    rightMotor.value = 0.5
-                else:
-                    rightMotor.value = 0
+                    leftMotor.value = 0.4
             else:
                 leftMotor.value = left * scaleFactor
+
+            if abs(right*scaleFactor) < 0.4:
+                if right < 0:
+                    rightMotor.value = -1 * 0.4
+                else:
+                    rightMotor.value = 0.4
+            else:
                 rightMotor.value = right * scaleFactor
+
 
 
 
