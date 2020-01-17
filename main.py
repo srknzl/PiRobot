@@ -131,6 +131,10 @@ def listenForMessages(cs):
             turnOffBuzzer()
             currentOperation = Operation.right
         elif message == "joystick":
+            if not str.isdigit(angle) or not str.isdigit(movement):
+                print("Wrong usage of joystick command")
+                continue
+
             angle = int(splittedData[1])
             movement = int(splittedData[2])
 
