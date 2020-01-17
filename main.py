@@ -143,28 +143,28 @@ def listenForMessages(cs):
             right = 0
             if angle == 0:
                 left = 1
-                right = 0
+                right = -1
             elif angle == 90:
                 left = 1
                 right = 1
             elif angle == 180:
-                left = 0
+                left = -1
                 right = 1
             elif angle == 270:
                 left = -1
                 right = -1
             elif 0 < angle < 90:
                 left = 1
-                right = (angle * 1.0) / 90
+                right = -1 + 2*(angle * 1.0) / 90
             elif 90 < angle < 180:
-                left = 2 - (angle * 1.0) / 90
+                left = 1-((angle-90) * 2.0) / 90
                 right = 1
             elif 180 < angle < 270:
-                left = 2 - (1.0 * angle) / 90
-                right = 5 - (1.0 * angle) / 45
+                left = -1
+                right = 1 - ((angle-180) * 2.0) / 90
             elif angle > 270:
-                left = -1 + (2.0 * (angle - 270)) / 90
-                right = -1 + (1.0 * (angle - 270)) / 90
+                left = -1 + ((angle-270) * 2.0) / 90
+                right = -1
 
             assert 1 >= left * scaleFactor >= -1, "left: " + str(left) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(left * scaleFactor)
             assert 1 >= right * scaleFactor >= -1, "right: " + str(right) + ", scaleFactor: " + str(scaleFactor) + ", mult: " + str(right * scaleFactor)
