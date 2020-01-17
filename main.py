@@ -142,7 +142,7 @@ def listenForMessages(cs):
             left = 0
             right = 0
 
-            if 20 >= angle > 0: # Turn right fast
+            if 20 >= angle >= 0: # Turn right fast
                 left = 1
                 right = 0.3
             elif 70 >= angle > 20: # Turn right slowly
