@@ -164,7 +164,7 @@ def listenForMessages(cs):
         # print(data)
 
 
-STOPTIME = 0.4
+STOPTIME = 0.43 # Konya :D
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
