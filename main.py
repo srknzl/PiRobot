@@ -50,11 +50,6 @@ def beep():
     buzzer.beep(0.3, 0.3)
 
 
-def countWheel():
-    global speedSensorCounter
-    speedSensorCounter += 1
-    print(speedSensorCounter)
-
 
 def connect():
     PORT = 1
@@ -108,7 +103,6 @@ def listenForMessages(cs):
         data = data.rstrip('\r\n')
         splittedData = data.split(" ")
         message = splittedData[0]
-        print(speedSensor.value)
         if message == "left":
             leftMotor.forward(0.2)
             rightMotor.forward(0.8)
@@ -152,9 +146,6 @@ def listenForMessages(cs):
             rightMotor.backward(0.5)
             turnOffLeds()
             beep()
-        elif message == "wheel":
-            client_socket.send("Wheel:" + str(speedSensorCounter))
-            print("Wheel: ", speedSensorCounter)
         # print(data)
 
 
@@ -177,9 +168,5 @@ leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> p
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
 
 buzzer = Buzzer(25)
-
-speedSensorCounter = 0
-speedSensor = Button(3)
-speedSensor.when_pressed = countWheel
 
 pause()
