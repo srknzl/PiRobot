@@ -142,30 +142,42 @@ def listenForMessages(cs):
             left = 0
             right = 0
 
-            if 20 >= angle >= 0 or angle > 340: # Turn around
+            if scaleFactor < 0.4:
+                left = 0
+                right = 0
+                ledsWhenStop()
+            elif 20 >= angle >= 0 or angle > 340:  # Turn around
                 left = 1
                 right = -1
-            if 70 >= angle >= 20: # Turn right
+                ledsWhenTurnRight()
+            elif 70 >= angle >= 20:  # Turn right
                 left = 1
-                right = 0.5
-            elif 110 >= angle > 70: # Go forward
+                right = 0.25
+                ledsWhenTurnRight()
+            elif 110 >= angle > 70:  # Go forward
                 left = 1
                 right = 1
-            elif 160 >= angle > 110: # Turn left
-                left = 0.5
+                turnOffLeds()
+            elif 160 >= angle > 110:  # Turn left
+                left = 0.25
                 right = 1
-            elif 200 >= angle > 160: # Turn around
+                ledsWhenTurnLeft()
+            elif 200 >= angle > 160:  # Turn around
                 left = -1
                 right = 1
-            elif 250 >= angle > 200: # Turn back left
-                left = -0.5
+                ledsWhenTurnLeft()
+            elif 250 >= angle > 200:  # Turn back left
+                left = -0.25
                 right = -1
-            elif 290 >= angle > 250: # Go back
+                ledsWhenTurnLeft()
+            elif 290 >= angle > 250:  # Go back
                 left = -1
                 right = -1
-            elif 340 >= angle > 290: # Turn back right
+                turnOffLeds()
+            elif 340 >= angle > 290:  # Turn back right
                 left = -1
-                right = -0.5
+                right = -0.25
+                ledsWhenTurnRight()
 
             if not 1 >= left * scaleFactor >= -1:
                 print("Something is not right with this motor value")
