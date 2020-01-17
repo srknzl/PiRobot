@@ -113,8 +113,8 @@ def listenForMessages(cs):
         if message == "left":
             #leftMotor.forward(0.2)
             #rightMotor.forward(0.8)
-            leftMotor.backward(0.7)
-            rightMotor.forward(0.7)
+            leftMotor.backward(1)
+            rightMotor.forward(1)
             stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
             stopper.start()
             ledsWhenTurnLeft()
@@ -122,8 +122,8 @@ def listenForMessages(cs):
         elif message == "right":
             #leftMotor.forward(0.8)
             #rightMotor.forward(0.2)
-            leftMotor.forward(0.7)
-            rightMotor.backward(0.7)
+            leftMotor.forward(1)
+            rightMotor.backward(1)
             stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
             stopper.start()
             ledsWhenTurnRight()
@@ -164,7 +164,7 @@ def listenForMessages(cs):
         # print(data)
 
 
-STOPTIME = 0.72
+STOPTIME = 0.5
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
