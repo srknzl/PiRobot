@@ -164,7 +164,7 @@ def listenForMessages(cs):
         # print(data)
 
 
-STOPTIME = 0.74
+STOPTIME = 0.72
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
