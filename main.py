@@ -175,10 +175,10 @@ connect()
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
 
-buzzer = Buzzer(17)
+buzzer = Buzzer(25)
 
 speedSensorCounter = 0
-speedSensor = Button(25)
+speedSensor = Button(17)
 speedSensor.when_pressed = countWheel
 
 pause()
