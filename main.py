@@ -43,7 +43,7 @@ def turnOffLeds():
 
 
 def stopSomeTimeLater():
-    time.sleep(0.7)
+    time.sleep(STOPTIME)
     leftMotor.stop()
     rightMotor.stop()
     ledsWhenStop()
@@ -113,8 +113,8 @@ def listenForMessages(cs):
         if message == "left":
             #leftMotor.forward(0.2)
             #rightMotor.forward(0.8)
-            leftMotor.backward(0.75)
-            rightMotor.forward(0.75)
+            leftMotor.backward(0.7)
+            rightMotor.forward(0.7)
             stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
             stopper.start()
             ledsWhenTurnLeft()
@@ -122,8 +122,8 @@ def listenForMessages(cs):
         elif message == "right":
             #leftMotor.forward(0.8)
             #rightMotor.forward(0.2)
-            leftMotor.forward(0.75)
-            rightMotor.backward(0.75)
+            leftMotor.forward(0.7)
+            rightMotor.backward(0.7)
             stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
             stopper.start()
             ledsWhenTurnRight()
@@ -164,6 +164,7 @@ def listenForMessages(cs):
         # print(data)
 
 
+STOPTIME = 0.78
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
