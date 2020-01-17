@@ -41,12 +41,13 @@ def turnOffLeds():
     leftGreen.off()
     rightGreen.off()
 
-
+"""
 def stopSomeTimeLater():
     time.sleep(STOPTIME)
     leftMotor.stop()
     rightMotor.stop()
     ledsWhenStop()
+"""
 
 
 def turnOffBuzzer():
@@ -55,7 +56,6 @@ def turnOffBuzzer():
 
 def beep():
     buzzer.beep(0.3, 0.3)
-
 
 
 def connect():
@@ -111,27 +111,23 @@ def listenForMessages(cs):
         splittedData = data.split(" ")
         message = splittedData[0]
         if message == "left":
-            #leftMotor.forward(0.2)
-            #rightMotor.forward(0.8)
             leftMotor.backward(1)
             rightMotor.forward(1)
-            stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
-            stopper.start()
+            #stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
+            #stopper.start()
             ledsWhenTurnLeft()
             turnOffBuzzer()
         elif message == "right":
-            #leftMotor.forward(0.8)
-            #rightMotor.forward(0.2)
             leftMotor.forward(1)
             rightMotor.backward(1)
-            stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
-            stopper.start()
+            #stopper = Thread(target=stopSomeTimeLater, args=(), daemon=True)
+            #stopper.start()
             ledsWhenTurnRight()
             turnOffBuzzer()
-        elif message == "left90":
-            pass  # todo Add 90 degree left turn code
-        elif message == "right90":
-            pass  # todo Add 90 degree left turn code
+        elif message == "joystick":
+            x = splittedData[1]
+            y = splittedData[2]
+            pass
         elif message == "speed":
             if len(splittedData) != 2:
                 client_socket.send("Wrong usage of speed command" + str(splittedData))
