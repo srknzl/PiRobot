@@ -134,8 +134,8 @@ def listenForMessages(cs):
             turnOffBuzzer()
             currentOperation = Operation.right
         elif message == "joystick":
-            angle = splittedData[1]
-            movement = splittedData[2]
+            angle = int(splittedData[1])
+            movement = int(splittedData[2])
 
             scaleFactor = 1.0*movement/100
             left = 0
