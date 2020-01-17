@@ -6,7 +6,6 @@ from signal import pause
 from bluetooth import *
 import subprocess
 import enum
-import math
 
 
 def ledsWhenTurnRight():
@@ -145,39 +144,55 @@ def listenForMessages(cs):
             if scaleFactor < 0.4:
                 left = 0
                 right = 0
-                ledsWhenStop()
+                if currentOperation != Operation.stop:
+                    ledsWhenStop()
+                currentOperation = Operation.stop
             elif 20 >= angle >= 0 or angle > 340:  # Turn around
                 left = 1
                 right = -1
-                ledsWhenTurnRight()
+                if currentOperation != Operation.right:
+                    ledsWhenTurnRight()
+                currentOperation = Operation.right
             elif 70 >= angle >= 20:  # Turn right
                 left = 1
                 right = 0.25
-                ledsWhenTurnRight()
+                if currentOperation != Operation.right:
+                    ledsWhenTurnRight()
+                currentOperation = Operation.right
             elif 110 >= angle > 70:  # Go forward
                 left = 1
                 right = 1
                 turnOffLeds()
+                currentOperation = Operation.forward
             elif 160 >= angle > 110:  # Turn left
                 left = 0.25
                 right = 1
-                ledsWhenTurnLeft()
+                if currentOperation != Operation.left:
+                    ledsWhenTurnLeft()
+                currentOperation = Operation.left
             elif 200 >= angle > 160:  # Turn around
                 left = -1
                 right = 1
-                ledsWhenTurnLeft()
+                if currentOperation != Operation.left:
+                    ledsWhenTurnLeft()
+                currentOperation = Operation.left
             elif 250 >= angle > 200:  # Turn back left
                 left = -0.25
                 right = -1
-                ledsWhenTurnLeft()
+                if currentOperation != Operation.left:
+                    ledsWhenTurnLeft()
+                currentOperation = Operation.left
             elif 290 >= angle > 250:  # Go back
                 left = -1
                 right = -1
                 turnOffLeds()
+                currentOperation = Operation.backward
             elif 340 >= angle > 290:  # Turn back right
                 left = -1
                 right = -0.25
-                ledsWhenTurnRight()
+                if currentOperation != Operation.right:
+                    ledsWhenTurnRight()
+                currentOperation = Operation.right
 
             if not 1 >= left * scaleFactor >= -1:
                 print("Something is not right with this motor value")
