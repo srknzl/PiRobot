@@ -179,7 +179,7 @@ rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
 buzzer = Buzzer(25)
 
 speedSensorCounter = 0
-speedSensor = Button(17)
+speedSensor = Button(3)
 speedSensor.when_pressed = countWheel
 
 pause()
