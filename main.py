@@ -47,7 +47,7 @@ def turnOffBuzzer():
 
 
 def beep():
-    buzzer.beep(0.3,0.3)
+    buzzer.beep(0.3, 0.3)
 
 
 def countWheel():
@@ -64,7 +64,6 @@ def connect():
     server_socket.listen(1)
     uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
     print("Starting a rfcomm server with uuid 94f39d29-7d6d-437d-973b-fba39e49d4ee..")
-
 
     advertise_service(server_socket, "raspberrypi",
                       service_id=uuid,
@@ -83,12 +82,15 @@ def connect():
 def discoveryEnabler():
     while True:
         time.sleep(10)
-        discoverable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Discoverable: ", shell=True).decode("utf-8")
-        pairable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Pairable: ", shell=True).decode("utf-8")
+        discoverable_result = subprocess.check_output(
+            " echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Discoverable: ", shell=True).decode("utf-8")
+        pairable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Pairable: ",
+                                                  shell=True).decode("utf-8")
 
         if 'no' in discoverable_result or 'no' in pairable_result:
-            subprocess.call( # pair without pin ref: https://stackoverflow.com/a/34751404/9483495
+            subprocess.call(  # pair without pin ref: https://stackoverflow.com/a/34751404/9483495
                 "echo  'discoverable on' | bluetoothctl && echo  'pairable on' | bluetoothctl", shell=True)
+
 
 def listenForMessages(cs):
     client_socket = cs  # type: BluetoothSocket
@@ -126,13 +128,13 @@ def listenForMessages(cs):
                 print("Wrong usage of speed command", splittedData)
                 continue
             if leftMotor.value < 0:
-                leftMotor.value = -1*float(splittedData[1])
-            else: 
+                leftMotor.value = -1 * float(splittedData[1])
+            else:
                 leftMotor.value = float(splittedData[1])
 
             if rightMotor.value < 0:
-                rightMotor.value = -1*float(splittedData[1])
-            else: 
+                rightMotor.value = -1 * float(splittedData[1])
+            else:
                 rightMotor.value = float(splittedData[1])
         elif message == "stop":
             leftMotor.value = 0
@@ -154,13 +156,14 @@ def listenForMessages(cs):
             print("Wheel: ", speedSensorCounter)
         # print(data)
 
+
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 print(subprocess.check_output(
-                "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
-                "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
-                "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
-                "utf-8"))
+    "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
+    "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
+    "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
+    "utf-8"))
 leftRed = PWMLED(15)
 leftGreen = PWMLED(14)
 rightRed = PWMLED(2)
@@ -173,8 +176,9 @@ leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> p
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
 
 buzzer = Buzzer(17)
-"""speedSensorCounter = 0
-speedSensor = Button(17)
+
+speedSensorCounter = 0
+speedSensor = Button(25)
 speedSensor.when_pressed = countWheel
-"""
+
 pause()
