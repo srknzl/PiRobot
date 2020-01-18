@@ -56,7 +56,7 @@ Raspberry Pi Robot Car Project
 
 
 ## Türkçe çalışma videosu
-* 
+* https://www.youtube.com/watch?v=Fa0YCz2Fe-I
 
 * Bu projede robot araba yaptım. Android uygulamasıyla arabamı kontrol ettim. Android uygulama reposu linki:
 * https://github.com/srknzl/PiRobotAndroidController
