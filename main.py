@@ -335,6 +335,11 @@ speed = 0.5
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 
+leftRed = PWMLED(15)
+leftGreen = PWMLED(14)
+rightRed = PWMLED(2)
+rightGreen = PWMLED(10)
+
 ledsWhenNotConnected()
 
 connect()
@@ -344,10 +349,7 @@ print(subprocess.check_output(
     "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
     "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
     "utf-8"))
-leftRed = PWMLED(15)
-leftGreen = PWMLED(14)
-rightRed = PWMLED(2)
-rightGreen = PWMLED(10)
+
 
 leftLDR = LightSensor(5)
 rightLDR = LightSensor(6)
