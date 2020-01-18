@@ -12,9 +12,10 @@ Raspberry Pi Robot Car Project
 ![4](./images/PiRobot4.jpg )
 
 ### Android 
-<img src="./images/android1.png" alt="5" width="300" height="600" />
-<img src="./images/android2.png" alt="6" width="300" height="600" />
-<img src="./images/android3.png" alt="7" width="300" height="600" />
+<img src="./images/android2.png" alt="5" width="300" height="600" />
+<img src="./images/android3.png" alt="6" width="300" height="600" />
+<img src="./images/android1.png" alt="7" width="300" height="600" />
+
 
 
 
