@@ -351,8 +351,8 @@ print(subprocess.check_output(
     "utf-8"))
 
 
-leftLDR = LightSensor(5)
-rightLDR = LightSensor(6)
+leftLDR = LightSensor(5, threshold=0.9)
+rightLDR = LightSensor(6, threshold=0.9)
 
 
 """
