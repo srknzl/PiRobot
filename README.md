@@ -3,14 +3,18 @@ Raspberry Pi Robot Car Project
 
 
 ## Resimler / Images
+
+### Car / Araba 
+
 ![1](./images/PiRobot1.jpg )
 ![2](./images/PiRobot2.jpg )
 ![3](./images/PiRobot3.jpg )
 ![4](./images/PiRobot4.jpg )
-![5](./images/android1.png )
-![6](./images/android2.png )
-![7](./images/android3.png )
 
+### Android 
+<img src="./images/android1.png" alt="5" width="300" height="600" />
+<img src="./images/android2.png" alt="6" width="300" height="600" />
+<img src="./images/android3.png" alt="7" width="300" height="600" />
 
 
 
