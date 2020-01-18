@@ -14,6 +14,7 @@ def stopFunction():
     leftMotor.stop()
     rightMotor.stop()
     currentOperation = Operation.stop
+    turnOffBuzzer()
 
 
 def ledsWhenTurnRight():
@@ -54,7 +55,7 @@ def turnOffLeds():
 def reportDistance():
     while True:
         print(distanceSensor.distance)
-        time.sleep(1)
+        time.sleep(0.2)
 """
 def stopSomeTimeLater():
     time.sleep(STOPTIME)
