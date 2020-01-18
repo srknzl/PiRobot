@@ -8,18 +8,12 @@ import subprocess
 import enum
 
 
-def senseDistance():
-    global distance
-    while True:
-        distance = sensor.distance * 100
-        print('Distance to nearest object is', distance , 'cm')
-        if distance < 30:
-            ledsWhenTurnRight()
-        elif 50 > distance >=30:
-            ledsWhenTurnLeft()
-        elif distance >= 50:
-            ledsWhenNotConnected()
-        time.sleep(1)
+def stopFunction():
+    global currentOperation
+    ledsWhenStop()
+    leftMotor.stop()
+    rightMotor.stop()
+    currentOperation = Operation.stop
 
 
 def ledsWhenTurnRight():
@@ -329,10 +323,9 @@ discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 
 distance = 0 # in cms
-sensor = DistanceSensor(20, 21)
+distanceSensor = DistanceSensor(20, 21, threshold_distance=0.2)
+distanceSensor.when_in_range = stopFunction
 
-distanceSensor = Thread(target=senseDistance, args=(), daemon=True)
-distanceSensor.start()
 
 print(subprocess.check_output(
     "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
