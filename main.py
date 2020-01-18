@@ -107,14 +107,9 @@ def connect():
 def discoveryEnabler():
     while True:
         time.sleep(10)
-        discoverable_result = subprocess.check_output(
-            " echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Discoverable: ", shell=True).decode("utf-8")
-        pairable_result = subprocess.check_output(" echo 'show B8:27:EB:49:FB:3B' | bluetoothctl | grep Pairable: ",
-                                                  shell=True).decode("utf-8")
-
-        if 'no' in discoverable_result or 'no' in pairable_result:
-            subprocess.call(  # pair without pin ref: https://stackoverflow.com/a/34751404/9483495
-                "echo  'discoverable on' | bluetoothctl && echo  'pairable on' | bluetoothctl", shell=True)
+        subprocess.call("echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
+                "bluetoothctl  && echo 'agent on' | bluetoothctl &&  echo 'default-agent ' | "
+                "bluetoothctl", shell=True)
 
 
 def listenForMessages(cs):
@@ -332,23 +327,24 @@ class Operation(enum.Enum):
 currentOperation = Operation.stop
 speed = 0.5
 # STOPTIME = 0.43
-discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
-discoveryEnabler.start()
+
 
 leftRed = PWMLED(15)
 leftGreen = PWMLED(14)
 rightRed = PWMLED(2)
 rightGreen = PWMLED(10)
 
+subprocess.call("echo 'discoverable on' | bluetoothctl && echo  'pairable on' | "
+                "bluetoothctl  && echo 'agent on' | bluetoothctl &&  echo 'default-agent ' | "
+                "bluetoothctl", shell=True)
+
+discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
+discoveryEnabler.start()
+
 ledsWhenNotConnected()
 
 connect()
 
-print(subprocess.check_output(
-    "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
-    "bluetoothctl  && echo 'agent NoInputNoOutput' | bluetoothctl &&  echo 'default-agent ' | "
-    "bluetoothctl && echo  'show B8:27:EB:49:FB:3B' | bluetoothctl ", shell=True).decode(
-    "utf-8"))
 
 
 leftLDR = LightSensor(5, threshold=0.9)
