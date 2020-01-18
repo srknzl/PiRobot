@@ -51,6 +51,10 @@ def turnOffLeds():
     rightGreen.off()
 
 
+def reportDistance():
+    while True:
+        print(distanceSensor.distance)
+        time.sleep(1)
 """
 def stopSomeTimeLater():
     time.sleep(STOPTIME)
@@ -325,6 +329,9 @@ discoveryEnabler.start()
 distance = 0 # in cms
 distanceSensor = DistanceSensor(20, 21, threshold_distance=0.4)
 distanceSensor.when_in_range = stopFunction
+
+distanceReporter = Thread(target=reportDistance, args=(), daemon=True)
+distanceReporter.start()
 
 
 print(subprocess.check_output(
