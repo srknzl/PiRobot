@@ -327,7 +327,7 @@ discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 
 distance = 0 # in cms
-distanceSensor = DistanceSensor(20, 21, threshold_distance=0.4)
+distanceSensor = DistanceSensor(20, 21, threshold_distance=0.2)
 distanceSensor.when_in_range = stopFunction
 
 distanceReporter = Thread(target=reportDistance, args=(), daemon=True)
