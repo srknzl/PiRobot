@@ -331,17 +331,13 @@ class Operation(enum.Enum):
 
 currentOperation = Operation.stop
 speed = 0.5
-# STOPTIME = 0.43 # Konya :D
+# STOPTIME = 0.43
 discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 
-distance = 0 # in cms
-distanceSensor = DistanceSensor(20, 21, threshold_distance=0.3)
-distanceSensor.when_in_range = stopFunction
+ledsWhenNotConnected()
 
-distanceReporter = Thread(target=reportDistance, args=(), daemon=True)
-distanceReporter.start()
-
+connect()
 
 print(subprocess.check_output(
     "echo  'power on' | bluetoothctl && echo  'discoverable on' | bluetoothctl && echo  'pairable on' | "
@@ -356,15 +352,21 @@ rightGreen = PWMLED(10)
 leftLDR = LightSensor(5)
 rightLDR = LightSensor(6)
 
-leftLDR.when_light = stopFunction
-rightLDR.when_light = stopFunction
 
+"""
 lightReporter = Thread(target=reportLight, args=(), daemon=True)
 lightReporter.start()
 
-ledsWhenNotConnected()
+distanceReporter = Thread(target=reportDistance, args=(), daemon=True)
+distanceReporter.start()
+"""
 
-connect()
+leftLDR.when_light = stopFunction
+rightLDR.when_light = stopFunction
+
+distance = 0 # in cms
+distanceSensor = DistanceSensor(20, 21, threshold_distance=0.3)
+distanceSensor.when_in_range = stopFunction
 
 leftMotor = Motor(23, 24, 18, pwm=True)  # In1 23-> pin16, In2 24->pin18, 18-> pin12
 rightMotor = Motor(27, 22, 19, pwm=True)  # 27-> pin13, 22-> pin15, 19-> pin35
