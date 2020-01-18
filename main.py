@@ -54,7 +54,7 @@ def turnOffLeds():
 
 def reportDistance():
     while True:
-        print(distanceSensor.distance)
+        print("Distance in meters: ", distanceSensor.distance)
         time.sleep(0.2)
 """
 def stopSomeTimeLater():
@@ -328,7 +328,7 @@ discoveryEnabler = Thread(target=discoveryEnabler, args=(), daemon=True)
 discoveryEnabler.start()
 
 distance = 0 # in cms
-distanceSensor = DistanceSensor(20, 21, threshold_distance=0.2)
+distanceSensor = DistanceSensor(20, 21, threshold_distance=0.3)
 distanceSensor.when_in_range = stopFunction
 
 distanceReporter = Thread(target=reportDistance, args=(), daemon=True)
