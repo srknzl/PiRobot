@@ -1,7 +1,7 @@
 import bluetooth
 import time
 from threading import Thread
-from gpiozero import Motor, PWMLED, Buzzer, DistanceSensor
+from gpiozero import Motor, PWMLED, Buzzer, DistanceSensor, LightSensor
 from signal import pause
 from bluetooth import *
 import subprocess
@@ -56,6 +56,14 @@ def reportDistance():
     while True:
         print("Distance in meters: ", distanceSensor.distance)
         time.sleep(0.2)
+
+
+
+def reportLight():
+    while True:
+        print("Right light: ", rightLDR.value)
+        print("Left light: ", leftLDR.value)
+        time.sleep(1)
 """
 def stopSomeTimeLater():
     time.sleep(STOPTIME)
@@ -344,6 +352,16 @@ leftRed = PWMLED(15)
 leftGreen = PWMLED(14)
 rightRed = PWMLED(2)
 rightGreen = PWMLED(10)
+
+leftLDR = LightSensor(5)
+rightLDR = LightSensor(6)
+
+leftLDR.when_light = stopFunction
+rightLDR.when_light = stopFunction
+
+lightReporter = Thread(target=reportLight, args=(), daemon=True)
+lightReporter.start()
+
 ledsWhenNotConnected()
 
 connect()
