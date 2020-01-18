@@ -14,7 +14,7 @@ Raspberry Pi Robot Car Project
 * In this project I built a raspberry pi robot car using python and android java. For android source code go to other repo:
 * https://github.com/srknzl/PiRobotAndroidController
 
-## Working video in english
+## Video of the running car  
 * 
 
 ### The car consists of
