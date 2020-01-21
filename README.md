@@ -20,6 +20,10 @@ Raspberry Pi Robot Car Project
 ## Circuit / Devre 
 <img src="./images/PiRobot_bb.png" alt="7" width="1000" height="600" />
 
+## Raspberry Pi 3 Pinout
+
+<img src="./images/pinout.PNG" alt="7" width="1000" height="600" />
+
 
 ## Description (See Below for Turkish )
 
